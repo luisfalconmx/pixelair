@@ -1,0 +1,32 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--init",
+        "--pull=missing",
+        "--add-host=host.docker.internal:host-gateway",
+        "mcr.microsoft.com/playwright/mcp",
+        "--isolated"
+      ]
+    },
+    "heroui": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--init",
+        "node:24-bookworm-slim",
+        "npx",
+        "-y",
+        "@heroui/react-mcp@latest"
+      ]
+    }
+  }
+}

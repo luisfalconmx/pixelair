@@ -1,0 +1,51 @@
+name: pixelair
+
+x-dev: &dev
+  build:
+    context: ./docker
+    args:
+      USER_UID: ${UID:-1000}
+      USER_GID: ${GID:-1000}
+  image: pixelair-dev:latest
+  working_dir: /app
+  init: true
+  volumes:
+    - .:/app
+    - pnpm-store:/pnpm/store
+    - corepack:/pnpm/corepack
+    - cargo-home:/cargo-home
+    - playwright-browsers:/ms-playwright
+  environment:
+    CI: ${CI:-}
+
+services:
+  # General purpose container: install, lint, test, build
+  dev:
+    <<: *dev
+    ports:
+      - "1420:1420"
+
+  # Runs the native Tauri window through WSLg (Windows 11) or a host X11/Wayland server.
+  tauri:
+    <<: *dev
+    command: pnpm tauri dev
+    environment:
+      DISPLAY: ${DISPLAY:-:0}
+      WAYLAND_DISPLAY: ${WAYLAND_DISPLAY:-wayland-0}
+      XDG_RUNTIME_DIR: /mnt/wslg/runtime-dir
+      PULSE_SERVER: /mnt/wslg/PulseServer
+      WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+    volumes:
+      - .:/app
+      - pnpm-store:/pnpm/store
+      - corepack:/pnpm/corepack
+      - cargo-home:/cargo-home
+      - playwright-browsers:/ms-playwright
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg
+
+volumes:
+  pnpm-store:
+  corepack:
+  cargo-home:
+  playwright-browsers:

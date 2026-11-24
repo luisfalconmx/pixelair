@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Pixelair logo">
+  <title>Pixelair</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#g)"/>
+  <g fill="#fff">
+    <rect x="232" y="232" width="176" height="176" rx="32"/>
+    <rect x="424" y="232" width="176" height="176" rx="32" opacity=".8"/>
+    <rect x="616" y="232" width="176" height="176" rx="32" opacity=".55"/>
+    <rect x="232" y="424" width="176" height="176" rx="32" opacity=".8"/>
+    <rect x="424" y="424" width="176" height="176" rx="32" opacity=".55"/>
+    <rect x="232" y="616" width="176" height="176" rx="32" opacity=".55"/>
+    <rect x="616" y="616" width="96" height="96" rx="24" opacity=".35"/>
+    <rect x="720" y="720" width="56" height="56" rx="16" opacity=".25"/>
+  </g>
+</svg>
