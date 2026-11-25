@@ -37,8 +37,8 @@ RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
     && ln -s /usr/local/lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack
 
-# System dependencies for Playwright browsers (browsers themselves live in a volume)
-RUN npx -y playwright@latest install-deps chromium \
+# System dependencies for Playwright browsers (Chromium ≈ WebView2, WebKit ≈ WebKitGTK/WKWebView) (browsers themselves live in a volume)
+RUN npx -y playwright@latest install-deps chromium webkit \
     && rm -rf /var/lib/apt/lists/* /root/.npm
 
 # Non-root user that matches the host user so files created in the

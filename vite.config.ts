@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import pkg from './package.json' with { type: 'json' }
+import tauriConf from './src-tauri/tauri.conf.json' with { type: 'json' }
 
 const host = process.env.TAURI_DEV_HOST
 
@@ -29,12 +30,33 @@ export default defineConfig({
       ignored: ['**/src-tauri/**'],
     },
   },
+  // jSquash codecs load their .wasm via import.meta.url: keep them out of pre-bundling
+  optimizeDeps: {
+    exclude: [
+      '@jsquash/avif',
+      '@jsquash/jpeg',
+      '@jsquash/oxipng',
+      '@jsquash/png',
+      '@jsquash/resize',
+      '@jsquash/webp',
+    ],
+  },
+  worker: {
+    format: 'es',
+  },
+  // `vite preview` serves the production build with the same CSP as the desktop app
+  preview: {
+    port: 4173,
+    headers: { 'Content-Security-Policy': tauriConf.app.security.csp },
+  },
   envPrefix: ['VITE_', 'TAURI_ENV_*'],
   build: {
     // Tauri uses Chromium on Windows and WebKit on macOS and Linux
     target: process.env.TAURI_ENV_PLATFORM === 'windows' ? 'chrome105' : 'safari15',
     minify: !process.env.TAURI_ENV_DEBUG,
     sourcemap: !!process.env.TAURI_ENV_DEBUG,
+    // Desktop app: assets load from disk, a larger UI chunk is fine
+    chunkSizeWarningLimit: 1500,
   },
   test: {
     environment: 'jsdom',

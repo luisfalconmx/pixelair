@@ -1,5 +1,6 @@
-/// Returns the application version. Small sample command to validate the
-/// frontend <-> Rust bridge; image processing commands will live next to it.
+mod export;
+
+/// Returns the application version.
 #[tauri::command]
 fn app_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
@@ -9,7 +10,8 @@ fn app_version() -> String {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![app_version])
+        .plugin(tauri_plugin_dialog::init())
+        .invoke_handler(tauri::generate_handler![app_version, export::save_output])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

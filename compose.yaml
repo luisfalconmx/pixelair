@@ -15,8 +15,6 @@ x-dev: &dev
     - corepack:/pnpm/corepack
     - cargo-home:/cargo-home
     - playwright-browsers:/ms-playwright
-  environment:
-    CI: ${CI:-}
 
 services:
   # General purpose container: install, lint, test, build

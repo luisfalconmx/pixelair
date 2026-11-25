@@ -19,3 +19,11 @@ Desktop image optimizer (Squoosh-like) built with Tauri 2 + Vite + React 19 + He
 - E2E specs live in `e2e/` and run against the Vite dev server on port 1420. Mock Tauri APIs with `@tauri-apps/api/mocks`.
 - Rust: commands go in `src-tauri/src/lib.rs` (or modules under it) and must pass `cargo fmt` + `clippy -D warnings`.
   New Tauri permissions go in `src-tauri/capabilities/default.json`.
+
+## Architecture
+
+- `src/codecs/codec.worker.ts`: decode → resize → encode with jSquash (Squoosh WASM codecs). `pool.ts` runs jobs in parallel workers.
+- `src/store/images.ts`: zustand store with the queue, per-image settings, debounced re-encoding and export.
+- `src/platform/export.ts`: native folder dialog + `save_output` Rust command (raw IPC body) in Tauri; browser downloads otherwise.
+- `src-tauri/src/export.rs`: writes files, rejects path traversal, never overwrites.
+- E2E runs on Chromium (≈ WebView2) and WebKit (≈ WebKitGTK/WKWebView); `pnpm e2e:prod` checks the production build under the desktop CSP.

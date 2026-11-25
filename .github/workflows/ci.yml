@@ -69,8 +69,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm e2e
+        run: pnpm exec playwright install --with-deps chromium webkit
+      - name: E2E (dev server)
+        run: pnpm e2e
+      - name: E2E (production build + desktop CSP)
+        run: pnpm e2e:prod
       - uses: actions/upload-artifact@v7
         if: failure()
         with:

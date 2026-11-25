@@ -22,18 +22,28 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "e2e": "playwright test",
-    "e2e:install": "playwright install chromium",
+    "e2e:prod": "playwright test -c playwright.preview.config.ts",
+    "e2e:install": "playwright install chromium webkit",
     "e2e:ui": "playwright test --ui-host=0.0.0.0 --ui-port=9323",
     "prepare": "husky"
   },
   "packageManager": "pnpm@12.23.0+sha512.02da94ffaf133f46074322afe552f90d40b5f71ae259aefbccdacc5085b1d617e98d65e0131f5748b9b67445978ee5055d7d59a473f1eef0d504854fefcd5975",
   "dependencies": {
+    "@gravity-ui/icons": "^2.24.0",
     "@heroui/react": "^3.2.8",
     "@heroui/styles": "^3.2.8",
+    "@jsquash/avif": "^2.1.1",
+    "@jsquash/jpeg": "^1.6.0",
+    "@jsquash/oxipng": "^2.3.0",
+    "@jsquash/png": "^3.1.1",
+    "@jsquash/resize": "^2.1.1",
+    "@jsquash/webp": "^1.5.0",
     "@tauri-apps/api": "^2.12.5",
+    "@tauri-apps/plugin-dialog": "^2.8.4",
     "@tauri-apps/plugin-opener": "^2.7.3",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "zustand": "^5.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.8",

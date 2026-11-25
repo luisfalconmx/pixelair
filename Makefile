@@ -5,7 +5,7 @@ export UID := $(shell id -u)
 export GID := $(shell id -g)
 
 .DEFAULT_GOAL := help
-.PHONY: help build setup install shell dev tauri tauri-build lint lint-fix typecheck test test-watch coverage e2e cargo-test cargo-lint check clean
+.PHONY: help build setup install shell dev tauri tauri-build lint lint-fix typecheck test test-watch coverage e2e e2e-prod cargo-test cargo-lint check clean
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -49,8 +49,11 @@ test-watch: ## Unit tests in watch mode
 coverage: ## Unit tests with coverage
 	$(RUN) pnpm test:coverage
 
-e2e: ## E2E tests (Playwright)
+e2e: ## E2E tests (Playwright, Chromium + WebKit)
 	$(RUN) pnpm e2e
+
+e2e-prod: ## E2E against the production build with the desktop CSP
+	$(RUN) pnpm e2e:prod
 
 cargo-test: ## Rust tests
 	$(RUN) bash -c 'cd src-tauri && cargo test'

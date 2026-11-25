@@ -3,7 +3,15 @@
 Lightweight desktop image optimizer inspired by [Squoosh](https://squoosh.app/).
 Drop JPG, PNG, WebP or AVIF files, shrink them without visible quality loss and strip their metadata — all locally, offline.
 
-> Status: **foundations only**. The image-processing logic comes next.
+## Features
+
+- **Squoosh codecs** compiled to WebAssembly ([jSquash](https://github.com/jamsinclair/jSquash)): MozJPEG, OxiPNG, libwebp, libavif and Squoosh's Lanczos3 resizer, running in a pool of Web Workers.
+- **Batch optimization**: drop or select many images (JPG, PNG, WebP, AVIF, GIF, BMP); compression starts immediately and runs in parallel.
+- **Metadata removal**: images are decoded to pixels and re-encoded, so EXIF/XMP/GPS/ICC data is dropped. JPEG EXIF orientation is applied first.
+- **Before/after comparison** with a draggable divider and zoom (Fit / 100% / 200%).
+- **Per-image settings**: output format, quality, lossless (WebP/AVIF), PNG effort, "apply to all".
+- **Multi-density export**: 0.5x, 0.75x, 1x, 1.5x, 2x, 3x, 4x (original = 1x) named `image@2x.webp`, `image@0.5x.webp`… (1x keeps `image.webp`).
+- **Export to a folder** chosen with the native dialog. Existing files are never overwritten (`image (1).webp`).
 
 ## Stack
 
