@@ -117,7 +117,8 @@ jobs:
   build:
     name: Build (${{ matrix.platform }})
     needs: [frontend, rust]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Installers on every push to main, or on demand for any branch (Actions → CI → Run workflow)
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     strategy:
       fail-fast: false
       matrix:
